@@ -1,0 +1,23 @@
+<svg width="100%" viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Where buyer and seller reach overlap: a listing appears only where both ranges cover the same ground.">
+<style>text{font-family:Arial,Helvetica,sans-serif;font-size:12px;fill:#44443f}</style>
+<rect x="120" y="72" width="240" height="108" rx="6" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<line x1="120" y1="66" x2="120" y2="180" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="240" y1="66" x2="240" y2="180" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="360" y1="66" x2="360" y2="180" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="480" y1="66" x2="480" y2="180" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="600" y1="66" x2="600" y2="180" stroke="#D3D1C7" stroke-width="0.5"/>
+<text x="180" y="56" text-anchor="middle">local</text>
+<text x="300" y="56" text-anchor="middle">state</text>
+<text x="420" y="56" text-anchor="middle">country</text>
+<text x="540" y="56" text-anchor="middle">worldwide</text>
+<text x="45" y="102">buyer</text>
+<rect x="120" y="80" width="360" height="36" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="300" y="101" text-anchor="middle" fill="#0C447C">looks up to country</text>
+<text x="45" y="156">seller</text>
+<rect x="120" y="134" width="240" height="36" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="240" y="155" text-anchor="middle" fill="#085041">sells up to state</text>
+<line x1="360" y1="70" x2="360" y2="186" stroke="#D85A30" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="240" y="198" text-anchor="middle">match — listing shows</text>
+<text x="420" y="198" text-anchor="middle">no match</text>
+<text x="360" y="220" text-anchor="middle">each bar runs from local outward to its chosen tier</text>
+</svg>

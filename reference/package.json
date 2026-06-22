@@ -1,0 +1,13 @@
+{
+  "name": "within-reach-reference",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Illustrative reference for the Within Reach reach layer. Not a deployable kit.",
+  "scripts": {
+    "demo": "tsx demo.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  }
+}

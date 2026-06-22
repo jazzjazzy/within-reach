@@ -1,0 +1,46 @@
+<svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9CA3AF"/></marker>
+    <marker id="arrowG" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16A34A"/></marker>
+    <marker id="arrowX" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D1D5DB"/></marker>
+  </defs>
+  <rect width="720" height="380" fill="#FFFFFF"/>
+  <style>
+    .box { font-size: 15px; font-weight: 700; }
+    .sub { font-size: 12px; fill: #6B7280; }
+    .rule { font-size: 13px; font-weight: 700; fill: #B45309; }
+    .cap { font-size: 12px; fill: #9CA3AF; }
+  </style>
+
+  <!-- Buyer search box (left) -->
+  <rect x="30" y="150" width="150" height="80" rx="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+  <text x="105" y="184" text-anchor="middle" class="box" fill="#1E3A8A">Buyer search</text>
+  <text x="105" y="206" text-anchor="middle" class="sub">location + reach</text>
+  <line x1="180" y1="190" x2="248" y2="190" stroke="#9CA3AF" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- catalogue feeding in (top) -->
+  <rect x="250" y="34" width="220" height="56" rx="10" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+  <text x="360" y="58" text-anchor="middle" class="box" fill="#374151">Catalogue</text>
+  <text x="360" y="78" text-anchor="middle" class="sub">all listings</text>
+  <line x1="360" y1="90" x2="360" y2="148" stroke="#9CA3AF" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Reach filter (center, highlighted) -->
+  <rect x="250" y="150" width="220" height="80" rx="10" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2.5"/>
+  <text x="360" y="184" text-anchor="middle" class="box" fill="#92400E">Reach filter</text>
+  <text x="360" y="206" text-anchor="middle" class="sub">the two-way rule</text>
+
+  <!-- pass to results -->
+  <line x1="470" y1="190" x2="538" y2="190" stroke="#16A34A" stroke-width="2" marker-end="url(#arrowG)"/>
+
+  <!-- Results box (right) -->
+  <rect x="540" y="150" width="150" height="80" rx="10" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
+  <text x="615" y="184" text-anchor="middle" class="box" fill="#166534">Results</text>
+  <text x="615" y="206" text-anchor="middle" class="sub">overlap only</text>
+
+  <!-- blocked drop -->
+  <line x1="360" y1="230" x2="360" y2="288" stroke="#D1D5DB" stroke-width="2" marker-end="url(#arrowX)"/>
+  <text x="360" y="310" text-anchor="middle" class="cap">out of reach — left out</text>
+
+  <!-- rule -->
+  <text x="360" y="352" text-anchor="middle" class="rule">seller.location within buyer.reach   AND   buyer.location within seller.reach</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg viewBox="0 0 700 360" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <rect width="700" height="360" fill="#FFFFFF"/>
+  <style>
+    .hdr { font-size: 16px; font-weight: 700; fill: #FFFFFF; }
+    .field { font-size: 14px; fill: #9CA3AF; }
+    .added { font-size: 14px; font-weight: 700; fill: #B45309; }
+    .matchlbl { font-size: 13px; font-weight: 700; fill: #15803D; }
+    .note { font-size: 13px; font-style: italic; fill: #6B7280; }
+  </style>
+
+  <!-- Left card: Listing (seller) -->
+  <rect x="40" y="40" width="240" height="244" rx="10" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1.5"/>
+  <path d="M40 50 a10 10 0 0 1 10 -10 h220 a10 10 0 0 1 10 10 v28 h-240 z" fill="#0D9488"/>
+  <text x="60" y="65" class="hdr">Listing · seller</text>
+  <text x="60" y="110" class="field">id</text>
+  <text x="60" y="136" class="field">title</text>
+  <text x="60" y="162" class="field">price</text>
+  <text x="60" y="188" class="field">photos</text>
+  <text x="60" y="214" class="field">description</text>
+  <line x1="56" y1="228" x2="264" y2="228" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="60" y="252" class="added">location</text>
+  <text x="60" y="274" class="added">reach</text>
+
+  <!-- Right card: Search (buyer) -->
+  <rect x="420" y="40" width="240" height="192" rx="10" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1.5"/>
+  <path d="M420 50 a10 10 0 0 1 10 -10 h220 a10 10 0 0 1 10 10 v28 h-240 z" fill="#2563EB"/>
+  <text x="440" y="65" class="hdr">Search · buyer</text>
+  <text x="440" y="110" class="field">text query</text>
+  <text x="440" y="136" class="field">category</text>
+  <line x1="436" y1="150" x2="644" y2="150" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="440" y="174" class="added">location</text>
+  <text x="440" y="196" class="added">reach</text>
+
+  <!-- center match -->
+  <line x1="280" y1="162" x2="324" y2="162" stroke="#9CA3AF" stroke-width="1.5"/>
+  <line x1="376" y1="162" x2="420" y2="162" stroke="#9CA3AF" stroke-width="1.5"/>
+  <circle cx="350" cy="162" r="26" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
+  <text x="350" y="167" text-anchor="middle" class="matchlbl">match</text>
+  <text x="350" y="208" text-anchor="middle" class="note">visible where reach</text>
+  <text x="350" y="225" text-anchor="middle" class="note">overlaps both ways</text>
+
+  <!-- footnote -->
+  <text x="350" y="328" text-anchor="middle" class="note">The highlighted fields are everything the reach layer adds — two on each side.</text>
+</svg>
