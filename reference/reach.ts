@@ -50,7 +50,7 @@ export interface LocalConfig {
 const DEFAULT_LOCAL: LocalConfig = { radiusKm: 25 };
 
 /** Great-circle distance in km between two located points, or null if either lacks a centroid. */
-function distanceKm(a: Location, b: Location): number | null {
+export function distanceKm(a: Location, b: Location): number | null {
   if (a.lat == null || a.lng == null || b.lat == null || b.lng == null) return null;
   const R = 6371;
   const toRad = (d: number) => (d * Math.PI) / 180;
