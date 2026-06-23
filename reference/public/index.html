@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Within Reach — match explorer</title>
+  <style>
+    :root {
+      --bg: #faf9f6;
+      --ink: #1c1b19;
+      --muted: #6b6862;
+      --line: #e4e1da;
+      --card: #ffffff;
+      --accent: #2f6f4e;
+      --accent-soft: #e8f1ec;
+      --match: #c0392b;          /* red border = reachable for this buyer */
+      --match-soft: #fbeae8;
+      --dim: #b8b3a9;
+      --dim-soft: #f4f2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    header { padding: 1.25rem 1.5rem .5rem; }
+    header h1 { font-size: 1.35rem; margin: 0 0 .2rem; letter-spacing: -.01em; }
+    header p { margin: 0; color: var(--muted); font-size: .92rem; }
+    header .intro { max-width: none; margin: 0 0 .5rem; }
+    header .intro em { font-style: italic; color: var(--ink); }
+    header code { background: var(--dim-soft); padding: .1em .35em; border-radius: 4px; font-size: .85em; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr 1.3fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem 1.5rem 3rem;
+    }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+    .col > h2 {
+      font-size: .72rem; text-transform: uppercase; letter-spacing: .07em;
+      color: var(--muted); margin: 0 0 .6rem; display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .legend { font-size: .68rem; color: var(--muted); text-transform: none; letter-spacing: 0; }
+    .legend .swatch { display: inline-block; width: .7em; height: .7em; border: 2px solid var(--match); border-radius: 3px; vertical-align: -1px; margin-right: .25rem; }
+
+    /* Buyer column */
+    .buyer {
+      background: var(--card); border: 1px solid var(--line); border-radius: 9px;
+      padding: .55rem .7rem; margin-bottom: .5rem; cursor: pointer; transition: border-color .1s, background .1s;
+    }
+    .buyer:hover { border-color: var(--accent); }
+    .buyer.active { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+    .buyer .name { font-weight: 600; }
+    .buyer .sub { color: var(--muted); font-size: .82rem; }
+
+    /* Middle column */
+    .banner {
+      background: var(--card); border: 1px solid var(--line); border-radius: 9px;
+      padding: .7rem .8rem; margin-bottom: .8rem; font-size: .9rem;
+    }
+    .banner .who { font-weight: 600; }
+    .banner.empty { color: var(--muted); }
+    .tiers { display: inline-flex; gap: .28rem; flex-wrap: wrap; margin-top: .4rem; }
+    .pill { font-size: .68rem; padding: .1em .5em; border-radius: 999px; background: var(--dim-soft); color: var(--muted); }
+    .pill.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+    .searchrow { display: flex; gap: .5rem; margin-bottom: 1rem; }
+    .searchrow input { flex: 1; padding: .55rem .7rem; font-size: 1rem; border: 1px solid var(--line); border-radius: 8px; }
+    .searchrow button { padding: .55rem 1rem; font-size: 1rem; font-weight: 600; border: 0; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer; }
+    .searchrow button:hover { background: #275f43; }
+    .cataloguelink { margin: -.4rem 0 1rem; font-size: .85rem; }
+    .cataloguelink a { color: var(--accent); text-decoration: none; }
+    .cataloguelink a:hover { text-decoration: underline; }
+
+    .summary { color: var(--muted); font-size: .85rem; margin: 0 0 .7rem; }
+    .summary b { color: var(--ink); }
+    .product {
+      background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+      border-radius: 8px; padding: .55rem .7rem; margin-bottom: .45rem;
+    }
+    .product .top { display: flex; justify-content: space-between; gap: .8rem; align-items: baseline; }
+    .product .title { font-weight: 600; font-size: .93rem; }
+    .product .price { color: var(--accent); font-weight: 700; white-space: nowrap; }
+    .product .meta { color: var(--muted); font-size: .82rem; margin-top: .1rem; }
+    .empty-note { color: var(--muted); font-style: italic; }
+
+    /* Seller column */
+    .seller {
+      background: var(--card); border: 1px solid var(--line); border-radius: 9px;
+      padding: .55rem .7rem; margin-bottom: .5rem; opacity: .55; transition: opacity .1s, border-color .1s;
+    }
+    .seller .name { font-weight: 600; }
+    .seller .sub { color: var(--muted); font-size: .82rem; }
+    .seller .reachtag { font-size: .68rem; padding: .08em .45em; border-radius: 999px; background: var(--dim-soft); color: var(--muted); margin-left: .35rem; }
+    .seller .detail { font-size: .78rem; color: var(--dim); margin-top: .25rem; }
+    .seller .count { float: right; font-size: .72rem; color: var(--match); font-weight: 700; }
+    .seller.matched {
+      opacity: 1; border: 2px solid var(--match); background: var(--match-soft);
+    }
+    .seller.matched .detail { color: var(--match); }
+    .seller.matched .reachtag { background: #f4d4cf; color: var(--match); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Within Reach — match explorer</h1>
+    <p class="intro">Pick a buyer on the left — they stand in for the logged-in user, the person doing the searching.
+      Sellers they can reach turn <strong style="color:#c0392b">red</strong> on the right
+      — <code>seller within buyer's reach AND buyer within seller's reach</code>. Search to list those sellers' products.</p>
+    <p class="intro">This runs the reach layer's one matching rule live over a seeded catalogue — 10 buyers,
+      20 sellers, 600 listings. Pick a buyer on the left and every seller on the right is scored against them:
+      the sellers whose reach overlaps the buyer's turn <strong style="color:#c0392b">red</strong> and rise to the top,
+      the rest dim out. Search in the middle and you see only the products belonging to those reachable sellers.</p>
+    <p class="intro">It's laid out this way to make one point unmistakable: <strong>visibility is mutual, not a distance
+      filter.</strong> A seller is reachable only when <code>seller within buyer's reach AND buyer within seller's reach</code>
+      — so "reachable" is a property of the <em>pair</em>, and the red set changes completely when you switch buyer. A
+      worldwide buyer lights up far-off sellers who chose to sell worldwide; a local buyer lights up the few sellers next
+      door. The search term never widens that set — it only picks products from within it.</p>
+  </header>
+
+  <div class="grid">
+    <div class="col" id="buyers-col">
+      <h2>Buyers</h2>
+      <div id="buyers"></div>
+    </div>
+
+    <div class="col" id="middle-col">
+      <h2>Search</h2>
+      <div class="banner empty" id="banner">Pick a buyer to begin.</div>
+      <form class="searchrow" id="form" autocomplete="off">
+        <input type="text" id="q" placeholder="coffee, mug, wallet, sourdough…" disabled />
+        <button type="submit" disabled>Search</button>
+      </form>
+      <p class="cataloguelink"><a href="/catalogue">Browse the full catalogue →</a></p>
+      <div id="results"></div>
+    </div>
+
+    <div class="col" id="sellers-col">
+      <h2>Sellers <span class="legend"><span class="swatch"></span>red = reachable</span></h2>
+      <div id="sellers"></div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const ALL_TIERS = ["local", "state", "country", "worldwide"];
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+    let users = [];
+    let current = null;          // selected buyer object
+    let lastMatch = null;        // /api/match payload for current buyer
+
+    // ---- Buyers (left) ----
+    async function loadBuyers() {
+      users = (await (await fetch("/api/users")).json()).users;
+      $("#buyers").innerHTML = users.map((u) =>
+        `<div class="buyer" data-id="${u.id}">
+           <div class="name">${esc(u.name)}</div>
+           <div class="sub">${esc(u.town)} · reach ${esc(u.reach)}</div>
+         </div>`).join("");
+      document.querySelectorAll(".buyer").forEach((el) =>
+        el.addEventListener("click", () => selectBuyer(el.dataset.id)));
+    }
+
+    // ---- Sellers (right), neutral until a buyer is chosen ----
+    async function loadSellersNeutral() {
+      const sellers = (await (await fetch("/api/sellers")).json()).sellers;
+      $("#sellers").innerHTML = sellers.map(sellerCard).join("");
+    }
+
+    function sellerCard(s, opts = {}) {
+      const matched = !!opts.matched;
+      const count = opts.count
+        ? `<span class="count">${opts.term ? esc(opts.term) + " " : ""}${opts.count} ✓</span>`
+        : "";
+      const detail = opts.detail
+        ? `<div class="detail">${esc(opts.detail)}${opts.distanceKm != null ? " · " + opts.distanceKm + " km" : ""}</div>`
+        : "";
+      return `<div class="seller ${matched ? "matched" : ""}" data-id="${s.id}">
+        ${count}
+        <div class="name">${esc(s.name)}<span class="reachtag">${esc(s.reach)}</span></div>
+        <div class="sub">${esc(s.town)}</div>
+        ${detail}
+      </div>`;
+    }
+
+    function tierPills(reach, usable) {
+      return ALL_TIERS.map((t) =>
+        `<span class="pill ${usable.includes(t) ? "on" : ""}">${t}${t === reach ? " ◂" : ""}</span>`).join("");
+    }
+
+    // ---- Select a buyer: score every seller, light up the reachable ones ----
+    async function selectBuyer(id) {
+      current = users.find((u) => u.id === id);
+      document.querySelectorAll(".buyer").forEach((el) =>
+        el.classList.toggle("active", el.dataset.id === id));
+
+      lastMatch = await (await fetch(`/api/match?user=${encodeURIComponent(id)}`)).json();
+      renderSellers();
+
+      const reachable = lastMatch.sellers.filter((s) => s.matched).length;
+      $("#banner").className = "banner";
+      $("#banner").innerHTML =
+        `<span class="who">${esc(current.name)}</span> — ${esc(current.town)}, reach <b>${esc(current.reach)}</b> · ` +
+        `<b style="color:#c0392b">${reachable}</b> of ${lastMatch.sellers.length} sellers reachable` +
+        `<div class="tiers">${tierPills(current.reach, lastMatch.you.usable)}</div>`;
+
+      $("#q").disabled = false;
+      $("#form button").disabled = false;
+      $("#q").value = "";
+      $("#results").innerHTML = "";
+      $("#q").focus();
+    }
+
+    function renderSellers(counts = {}, term = "") {
+      if (!lastMatch) return;
+      $("#sellers").innerHTML = lastMatch.sellers
+        .slice()
+        .sort((a, b) => (b.matched - a.matched) || ((a.distanceKm ?? 1e9) - (b.distanceKm ?? 1e9)))
+        .map((s) => sellerCard(s, { matched: s.matched, detail: s.detail, distanceKm: s.distanceKm, count: counts[s.id], term }))
+        .join("");
+    }
+
+    // ---- Search: products from the reachable sellers ----
+    async function doSearch(e) {
+      e.preventDefault();
+      if (!current) return;
+      const q = $("#q").value.trim();
+      if (!q) return;
+      const data = await (await fetch(`/api/search?user=${encodeURIComponent(current.id)}&q=${encodeURIComponent(q)}`)).json();
+
+      // per-seller product counts -> annotate the seller column
+      const counts = {};
+      data.visible.forEach((v) => { counts[v.sellerId] = (counts[v.sellerId] || 0) + 1; });
+      renderSellers(counts, q);
+
+      const parts = [`<p class="summary"><b>${data.visible.length}</b> product(s) for “${esc(q)}” from your reachable sellers` +
+        (data.hidden.length ? ` · ${data.hidden.length} hidden behind a seller's reach` : "") + `</p>`];
+      if (data.visible.length === 0) {
+        parts.push(`<p class="empty-note">No reachable seller has “${esc(q)}”.</p>`);
+      } else {
+        parts.push(data.visible.map((v) =>
+          `<div class="product">
+             <div class="top"><span class="title">${esc(v.title)}</span><span class="price">${esc(v.price)}</span></div>
+             <div class="meta">${esc(v.seller)} — ${esc(v.town)}${v.distanceKm != null ? " · " + v.distanceKm + " km" : ""} · ${esc(v.tier)}</div>
+           </div>`).join(""));
+      }
+      $("#results").innerHTML = parts.join("");
+    }
+
+    $("#form").addEventListener("submit", doSearch);
+    loadBuyers();
+    loadSellersNeutral();
+  </script>
+</body>
+</html>

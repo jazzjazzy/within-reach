@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Within Reach — full catalogue</title>
+  <style>
+    :root {
+      --bg: #faf9f6; --ink: #1c1b19; --muted: #6b6862; --line: #e4e1da; --card: #ffffff;
+      --accent: #2f6f4e; --accent-soft: #e8f1ec; --dim-soft: #f4f2ec;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); }
+    header { padding: 1.25rem 1.5rem .75rem; }
+    .crumb { font-size: .85rem; margin: 0 0 .4rem; }
+    .crumb a { color: var(--accent); text-decoration: none; }
+    .crumb a:hover { text-decoration: underline; }
+    h1 { font-size: 1.35rem; margin: 0 0 .2rem; letter-spacing: -.01em; }
+    header p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    .toolbar { padding: 0 1.5rem 1rem; display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+    .toolbar input { flex: 1; min-width: 220px; padding: .55rem .7rem; font-size: 1rem; border: 1px solid var(--line); border-radius: 8px; }
+    .toolbar .stat { color: var(--muted); font-size: .85rem; white-space: nowrap; }
+    .toolbar .stat b { color: var(--ink); }
+
+    main { padding: 0 1.5rem 4rem; }
+    .seller {
+      background: var(--card); border: 1px solid var(--line); border-radius: 11px;
+      padding: .9rem 1rem; margin-bottom: 1rem;
+    }
+    .seller > .head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .7rem; padding-bottom: .55rem; border-bottom: 1px solid var(--line); }
+    .seller .who { font-size: 1.02rem; font-weight: 700; }
+    .seller .where { color: var(--muted); font-size: .85rem; font-weight: 400; margin-left: .5rem; }
+    .seller .reachtag { font-size: .7rem; padding: .12em .55em; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    .seller .n { color: var(--muted); font-size: .8rem; white-space: nowrap; }
+
+    .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .4rem .8rem; }
+    .item { display: flex; justify-content: space-between; gap: .6rem; padding: .35rem .5rem; border-radius: 6px; font-size: .88rem; }
+    .item:hover { background: var(--dim-soft); }
+    .item .t { overflow: hidden; text-overflow: ellipsis; }
+    .item .p { color: var(--accent); font-weight: 700; white-space: nowrap; }
+    mark { background: #fff1a8; padding: 0 .05em; }
+    .seller.hide, .item.hide { display: none; }
+    .noresults { color: var(--muted); font-style: italic; padding: 1rem 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="crumb"><a href="/">← back to the match explorer</a></p>
+    <h1>Within Reach — full catalogue</h1>
+    <p>Every listing in the seeded dataset, grouped by seller. This is the raw catalogue with <strong>no reach rule
+      applied</strong> — it's what exists, before any buyer's reach decides what they can see. Filter to find anything.</p>
+  </header>
+
+  <div class="toolbar">
+    <input type="text" id="filter" placeholder="Filter by product or seller — honey, wallet, Kenji…" autocomplete="off" />
+    <span class="stat" id="stat"></span>
+  </div>
+
+  <main id="main"></main>
+
+  <script>
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    let data = null;
+
+    async function load() {
+      data = await (await fetch("/api/catalogue")).json();
+      document.getElementById("main").innerHTML = data.groups.map(group).join("");
+      setStat(data.total, data.total);
+    }
+
+    function group(g) {
+      const items = g.listings.map((l) =>
+        `<div class="item" data-text="${esc((l.title).toLowerCase())}">
+           <span class="t">${esc(l.title)}</span><span class="p">${esc(l.price)}</span>
+         </div>`).join("");
+      return `<section class="seller" data-seller="${esc(g.name.toLowerCase())}" data-id="${g.id}">
+        <div class="head">
+          <div><span class="who">${esc(g.name)}</span><span class="where">${esc(g.town)} · ${esc(g.country)}</span></div>
+          <div><span class="reachtag">${esc(g.reach)}</span> <span class="n">${g.listings.length} items</span></div>
+        </div>
+        <div class="items">${items}</div>
+      </section>`;
+    }
+
+    function setStat(shown, total) {
+      document.getElementById("stat").innerHTML = `<b>${shown}</b> of ${total} items · ${data.sellers} sellers`;
+    }
+
+    function applyFilter(q) {
+      q = q.trim().toLowerCase();
+      let shown = 0;
+      document.querySelectorAll(".seller").forEach((sec) => {
+        const sellerHit = !q || sec.dataset.seller.includes(q);
+        let any = 0;
+        sec.querySelectorAll(".item").forEach((it) => {
+          const hit = !q || sellerHit || it.dataset.text.includes(q);
+          it.classList.toggle("hide", !hit);
+          if (hit) { any++; shown++; }
+        });
+        sec.classList.toggle("hide", any === 0);
+      });
+      setStat(shown, data.total);
+    }
+
+    document.getElementById("filter").addEventListener("input", (e) => applyFilter(e.target.value));
+    load();
+  </script>
+</body>
+</html>

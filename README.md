@@ -22,26 +22,54 @@ Each side's reach is read outward from their *own* location, turning a tier into
 
 ```
 within-reach/
-├── docs/                      the idea, in full
+├── whitepaper/                 the idea, in full
 │   ├── within-reach-whitepaper.md      ← start here
 │   ├── within-reach-whitepaper.pdf
 │   └── figure-*.svg
-└── reference/                 the one new part, as runnable code
-    ├── reach.ts               types, the region logic, and the matching rule
-    └── demo.ts                worked examples / a self-check
+└── reference/                  the one new part, as runnable code
+    ├── reach.ts                types, the region logic, and the matching rule
+    ├── demo.ts                 worked examples / a self-check
+    ├── db.ts                   SQLite storage + hydration back into the reach types
+    ├── engine.ts               text search + the visibility decision (calls reach.ts)
+    ├── seed.ts                 rebuilds the database from seed-data.json
+    ├── seed-data.json          a seeded world: 15 postcodes, 10 buyers, 20 sellers, 600 listings
+    ├── server.ts               a tiny demo web server (Node's built-in http, no framework)
+    └── public/                 the browser UI: match explorer + full catalogue
 ```
 
-The white paper is the argument. The reference is a single small example proving the rule holds up — it is **illustrative, not a deployable kit**. Take it as a sketch to save you a blank page, not something to drop into a system as-is.
+The white paper is the argument. The reference is a small, illustrative build — the matching rule, plus
+just enough around it to watch it work over a realistic dataset. It is **illustrative, not a deployable kit**.
+Take it as a sketch to save you a blank page, not something to drop into a system as-is.
+
+The reach rule lives in exactly one place — `reach.ts`. SQLite only stores rows and does the text search on
+listing titles; the authoritative step is always hydrating candidates back into the reach types and calling
+`matches(seller, buyer)` in `engine.ts`. No reach or overlap logic is ever pushed down into SQL.
 
 ## Running the reference
 
 ```bash
 cd reference
 npm install
-npm run demo
+npm run demo     # the self-check — every canonical case prints PASS
+npm run seed     # build the SQLite database from seed-data.json
+npm run web      # interactive demo at http://localhost:8137
 ```
 
-You should see every canonical case pass: a local-only seller reachable by a nearby buyer but not a distant one; a national seller invisible to an overseas buyer by its own choice; precision gating which tiers a participant can use.
+**`npm run demo`** runs the worked examples as a self-check. Every canonical case should pass: a local-only
+seller reachable by a nearby buyer but not a distant one; a national seller invisible to an overseas buyer by
+its own choice; precision gating which tiers a participant can use.
+
+**`npm run web`** (after seeding) serves a browser demo on `http://localhost:8137`:
+
+- a **match explorer** — pick a buyer and every seller whose reach overlaps theirs lights up; search a term to
+  list those reachable sellers' products. Switch buyer and the reachable set changes completely, because reach
+  is mutual: a worldwide buyer sees far-off sellers who chose to sell worldwide, a local buyer sees the few
+  next door.
+- a **full catalogue** (`/catalogue`) — all 600 listings grouped by seller, with no reach rule applied: the raw
+  pool before any buyer's reach decides what they see.
+
+The `.db` file is rebuilt by `npm run seed` and is not committed; edit `seed-data.json` to change the world.
+Set `PORT` to run the server somewhere other than 8137.
 
 ## Status
 
