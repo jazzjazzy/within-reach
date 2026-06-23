@@ -5,9 +5,15 @@
   "type": "module",
   "description": "Illustrative reference for the Within Reach reach layer. Not a deployable kit.",
   "scripts": {
-    "demo": "tsx demo.ts"
+    "demo": "tsx demo.ts",
+    "seed": "tsx seed.ts",
+    "web": "tsx server.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.0"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
     "tsx": "^4.19.0"
   }
 }

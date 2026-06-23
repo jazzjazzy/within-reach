@@ -3,7 +3,7 @@
 //
 //   npm run demo
 
-import { matches, usableReach, type Party, type Location } from "./reach.js";
+import { matches, usableReach, distanceKm, type Party, type Location } from "./reach.js";
 
 // A few real-ish places. Centroids are approximate — good enough to show the radius
 // behaviour without pulling in a postcode dataset.
@@ -51,6 +51,12 @@ check("worldwide maker <-> worldwide buyer", matches(globalMaker, ukBuyer), true
 // 5. Size-neutrality. A large national operation that bounds itself to its own country
 //    is invisible to an overseas buyer — by its own choice, not because it's small.
 check("country-bounded seller <-> overseas buyer", matches(nationalSeller, ukBuyer), false);
+
+// 6. Distance readout (used by the interactive search demo to show "X km away").
+//    Canberra -> Sydney is ~250 km; with no centroid it's null, not a guess.
+const dCanSyd = distanceKm(canberra, sydney);
+check("distance Canberra<->Sydney is 240-260 km", dCanSyd != null && dCanSyd > 240 && dCanSyd < 260, true);
+check("distance is null without a centroid", distanceKm(canberra, { country: "AU" }) === null, true);
 
 // Precision gates tiers: what you can use depends on what you shared.
 console.log("\nusable reach, country only :", usableReach({ country: "AU" }).join(", "));
