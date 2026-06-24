@@ -1,6 +1,6 @@
 // Within Reach — reference implementation of the "reach layer".
 //
-// This is illustrative, not a deployable kit. The white paper in ../docs is the
+// This is illustrative, not a deployable kit. The white paper in ../whitepaper is the
 // idea; this file is one worked example showing the single matching rule holds up.
 // Everything distinctive about the model lives here, and it is deliberately small:
 // two fields on each side (location, reach) and one rule.
