@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Within Reach — a local-first marketplace, worldwide by choice</title>
+<meta name="description" content="A worldwide buyer still can't see the local-only seller — and that's the point. An open marketplace idea where reach runs both ways. Free, with working code.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Within Reach — a local-first marketplace, worldwide by choice">
+<meta property="og:description" content="A worldwide buyer still can't see the local-only seller — and that's the point. An open marketplace idea where reach runs both ways. Free, with working code.">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F6F6;
+    --panel:#FBFCFC;
+    --ink:#17222B;
+    --ink-soft:#4C5862;
+    --buyer:#2C5FA6;
+    --seller:#147A60;
+    --accent:#B5731A;
+    --accent-soft:#F2E4CE;
+    --line:rgba(23,34,43,.13);
+    --display:"Space Grotesk",system-ui,sans-serif;
+    --serif:"Newsreader",Georgia,serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--serif);font-size:1.18rem;line-height:1.72;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{text-decoration-color:var(--ink)}
+
+  /* hero */
+  .hero{padding:96px 0 8px;text-align:center}
+  .eyebrow{
+    font-family:var(--display);font-size:.78rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+    margin:0 0 26px
+  }
+  h1{
+    font-family:var(--display);font-weight:600;
+    font-size:clamp(2.1rem,5.4vw,3.25rem);line-height:1.06;
+    letter-spacing:-.018em;margin:0 auto;max-width:14ch
+  }
+  .lede{
+    font-size:clamp(1.2rem,2.4vw,1.42rem);color:var(--ink-soft);
+    margin:24px auto 0;max-width:42ch;line-height:1.5
+  }
+
+  /* signature visual */
+  .figure{margin:44px auto 6px;max-width:430px}
+  .figure svg{width:100%;height:auto;display:block}
+  @media (prefers-reduced-motion:no-preference){
+    .disc,.pin,.lensLabel{opacity:0;animation:rise .9s cubic-bezier(.2,.7,.3,1) forwards}
+    .d2{animation-delay:.12s}
+    .pin{animation-delay:.42s}
+    .lensLabel{animation-delay:.62s}
+    @keyframes rise{to{opacity:1}}
+  }
+  .figcaption{
+    font-family:var(--display);font-size:.82rem;color:var(--ink-soft);
+    text-align:center;margin:10px auto 0;letter-spacing:.01em
+  }
+
+  /* actions */
+  .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:40px 0 4px}
+  .btn{
+    font-family:var(--display);font-size:.98rem;font-weight:500;
+    padding:13px 24px;border-radius:9px;text-decoration:none;
+    border:1.5px solid var(--ink);transition:transform .12s ease,background .15s ease,color .15s ease
+  }
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+  .btn:focus-visible,a:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px}
+
+  /* article */
+  article{padding:54px 0 8px}
+  article p{margin:0 0 1.25em}
+  article h2{
+    font-family:var(--display);font-weight:500;font-size:1.5rem;
+    letter-spacing:-.01em;line-height:1.2;margin:2.4em 0 .7em
+  }
+  article em{font-style:italic}
+  .dropcap::first-letter{
+    font-family:var(--display);font-weight:600;float:left;
+    font-size:3.4rem;line-height:.82;padding:6px 10px 0 0;color:var(--ink)
+  }
+
+  /* the rule card */
+  .rule{
+    background:var(--panel);border:1px solid var(--line);
+    border-left:4px solid var(--accent);border-radius:10px;
+    padding:24px 26px;margin:30px 0 8px
+  }
+  .rule .lab{
+    font-family:var(--display);font-size:.74rem;font-weight:600;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin:0 0 14px
+  }
+  .rule code{
+    font-family:var(--mono);font-size:.96rem;line-height:1.6;
+    display:block;color:var(--ink);word-break:break-word
+  }
+  .rule .gloss{
+    font-family:var(--display);font-size:.92rem;color:var(--ink-soft);
+    margin:16px 0 0;line-height:1.5
+  }
+  .tk-b{color:var(--buyer);font-weight:500}
+  .tk-s{color:var(--seller);font-weight:500}
+  .tk-v{color:var(--accent);font-weight:500}
+
+  /* what's here */
+  .here{padding:48px 0 8px;border-top:1px solid var(--line);margin-top:48px}
+  .here h2{font-family:var(--display);font-weight:500;font-size:1.3rem;margin:0 0 22px}
+  .links{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+  .links li{
+    border:1px solid var(--line);border-radius:10px;padding:18px 20px;
+    background:var(--panel);transition:border-color .15s ease,transform .12s ease
+  }
+  .links li:hover{border-color:var(--ink);transform:translateY(-2px)}
+  .links a{font-family:var(--display);font-weight:500;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+  .links a:hover{color:var(--accent)}
+  .links .sub{font-family:var(--display);font-size:.86rem;color:var(--ink-soft);margin-top:4px;line-height:1.45}
+
+  /* footer */
+  footer{padding:54px 0 80px;margin-top:46px;border-top:1px solid var(--line)}
+  footer p{font-family:var(--display);font-size:.92rem;color:var(--ink-soft);line-height:1.6;margin:0 0 .7em}
+  footer .strong{color:var(--ink);font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">An open marketplace idea · free to take</p>
+    <h1>A worldwide buyer who still can't find the coffee.</h1>
+    <p class="lede">Not a bug — the whole idea. A marketplace where reach runs both ways, and a listing shows only where two reaches overlap.</p>
+
+    <div class="figure" aria-hidden="true">
+      <svg viewBox="0 0 430 250" role="img" xmlns="http://www.w3.org/2000/svg">
+        <title>Two overlapping reaches; a listing shows only where both cover both people.</title>
+        <defs>
+          <clipPath id="clipBuyer"><circle cx="185" cy="118" r="92"/></clipPath>
+        </defs>
+        <circle class="disc d1" cx="185" cy="118" r="92" fill="#2C5FA6" fill-opacity="0.10" stroke="#2C5FA6" stroke-width="1.4"/>
+        <circle class="disc d2" cx="245" cy="118" r="92" fill="#147A60" fill-opacity="0.10" stroke="#147A60" stroke-width="1.4"/>
+        <circle class="disc d2" cx="245" cy="118" r="92" fill="#B5731A" fill-opacity="0.30" clip-path="url(#clipBuyer)" stroke="none"/>
+        <circle class="pin" cx="185" cy="118" r="5" fill="#2C5FA6"/>
+        <circle class="pin" cx="245" cy="118" r="5" fill="#147A60"/>
+        <text class="lensLabel" x="215" y="114" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="#8A560F">shows</text>
+        <text class="lensLabel" x="215" y="131" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="#8A560F">here</text>
+        <text x="120" y="238" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="500" fill="#2C5FA6">your reach</text>
+        <text x="310" y="238" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="500" fill="#147A60">their reach</text>
+      </svg>
+    </div>
+    <p class="figcaption">A listing is visible only in the overlap — where each side reaches the other.</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="./whitepaper/within-reach-whitepaper.pdf">Read the paper</a>
+      <a class="btn btn-ghost" href="https://github.com/jazzjazzy/within-reach">View the code</a>
+    </div>
+  </header>
+
+  <article>
+    <p class="dropcap">Picture someone in Brooklyn who wants good coffee beans. She sets her search to <em>worldwide</em> — the widest setting there is — and types "coffee." A roaster in Melbourne has exactly what she's after. She never sees it.</p>
+
+    <p>That isn't a bug. It's the whole idea.</p>
+
+    <p>The roaster set itself to sell within its own country. Brooklyn isn't in it. Her reach being worldwide opens <em>her</em> side of the deal — she's willing to look anywhere — but it does nothing to the roaster's side. The roaster decided, deliberately, not to sell that far. So the listing doesn't show. Visibility needs both people to agree on the same patch of ground, not just one.</p>
+
+    <p>That single sentence is the entire proposal, and it runs against how every marketplace you've used works. So let me back up to why it's worth doing.</p>
+
+    <h2>We answered the question for everyone</h2>
+
+    <p>Buying and selling online used to involve a quiet, useful question: where do you want to buy, and how far are you willing to sell? Somewhere along the way the big platforms answered it on everyone's behalf — <em>everywhere</em> — and then stopped asking. Reach became a thing that happened to you, not a thing you set.</p>
+
+    <p>For a lot of trade that's fine. For a lot more, it quietly broke things. Discovery got worse, not better: you search for a chopping board and get ten thousand identical drop-shipped ones, and the person making them three suburbs over is somewhere on page forty, if they're listed at all. And whole kinds of trade never got a home online — the produce that won't survive a courier, the bread, the seedlings, the heavy thing you'd hand to a neighbour. None of it ships, so none of it fits a model built on shipping to anyone, anywhere.</p>
+
+    <p>If you've only ever shopped a global site from the country it was built for, you've probably never felt any of this. It works for you because it was shaped around you. Everyone else feels it constantly — the prices in the wrong currency, the sellers who won't post to where they live, the quiet assumption that "the market" is somewhere else.</p>
+
+    <h2>One rule, both directions</h2>
+
+    <p>Here's the fix, in full. The buyer and the seller each set a reach: local, their state, their country, or worldwide. A listing appears for a buyer only when two things are true at once — the seller sits inside the buyer's reach, <em>and</em> the buyer sits inside the seller's reach. Both have to say yes to the same geography, or the listing simply doesn't show.</p>
+
+    <div class="rule">
+      <p class="lab">The whole rule</p>
+      <code>visible = (<span class="tk-s">seller</span> within <span class="tk-b">buyer.reach</span>) and (<span class="tk-b">buyer</span> within <span class="tk-s">seller.reach</span>)</code>
+      <p class="gloss">Each reach is read outward from that party's own location. Both must contain the other, or the listing doesn't show.</p>
+    </div>
+
+    <p>Your reach is measured from where <em>you</em> are. "Country" means <em>your</em> country; "local" means near <em>you</em>. Set yourself wide and you remove your own limits — you'll see every seller willing to reach you. You can't remove theirs. A seller who only sells local stays invisible to a buyer on the other side of the world, no matter how far that buyer is willing to look.</p>
+
+    <p>That's the part people misread, so it's worth saying plainly: a worldwide buyer doesn't see everything. They see everything <em>offered to where they are</em>.</p>
+
+    <h2>Why bother</h2>
+
+    <p>Because that one rule does things the everywhere-model can't.</p>
+
+    <p>It sorts people by where they are and how far they'll go — never by how big they are. The same settings serve a backyard grower and a national operation, and a global seller can't bury a local one, because a buyer looking locally only ever sees sellers reaching into that spot.</p>
+
+    <p>It makes room for all the trade that can't ship — the lemons, the pickup-only, the handed-over-in-person — which no global marketplace can structurally host.</p>
+
+    <p>And value stays as close to home as each side chooses, instead of leaking to a middle by default.</p>
+
+    <h2>It's free, and it's not mine to keep</h2>
+
+    <p>This isn't a company, and there's nothing to buy. It's a white paper and a small piece of working code: a reference implementation of the one rule, and a runnable demo you can search as different buyers to watch the overlap decide what shows.</p>
+
+    <p>It's published in the open, dated, so the idea can't be quietly patented and fenced off. It's open-source, so it can't be shut. It's forkable, so it can't be owned. Nobody owns it, because there's nothing at the centre to own. Anyone can stand up their own.</p>
+
+    <p>I wrote the idea down. I'm not the person to build it at scale, and it doesn't need me to be — it needs whoever's in the right spot to pick it up. The paper is the argument; the code is the proof it holds. If that's you, take it and go.</p>
+  </article>
+
+  <section class="here">
+    <h2>Take a closer look</h2>
+    <ul class="links">
+      <li>
+        <a href="./whitepaper/within-reach-whitepaper.pdf">The white paper &rarr;</a>
+        <div class="sub">The full argument — problem, principles, the rule, who it serves, and how it stays open.</div>
+      </li>
+      <li>
+        <a href="https://github.com/jazzjazzy/within-reach/tree/main/reference">The reference code &rarr;</a>
+        <div class="sub">TypeScript. The one rule in <code>reach.ts</code>, plus a runnable search demo over a real catalogue.</div>
+      </li>
+      <li>
+        <a href="https://github.com/jazzjazzy/within-reach">The repository &rarr;</a>
+        <div class="sub">Everything in one place. Clone it, read it, fork it — it's yours to build on.</div>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <p class="strong">Owned by no one. Open, and forkable.</p>
+    <p>Within Reach is published as prior art so the idea stays free for anyone to use, and the reference code is open source. There's nothing at the centre to buy or capture — only an idea, and a worked example that it holds together.</p>
+    <p><a href="https://github.com/jazzjazzy/within-reach">github.com/jazzjazzy/within-reach</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
