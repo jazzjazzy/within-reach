@@ -182,4 +182,8 @@ What's in the open repository is example code, not a product. It's a working ske
 
 Everything past that is yours to decide. Fork an engine or write your own; make "local" mean whatever fits your corner of the world; light the first market with people who already know each other. The idea is free and belongs to no one, and it only becomes something if someone is moved to make it. If that's you — be inspired, and build it.
 
+---
+
+*This paper is released under a [Creative Commons Attribution 4.0 International licence (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) — free to share and adapt, with attribution. The accompanying reference code is licensed separately under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).*
+
 

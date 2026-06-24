@@ -77,13 +77,16 @@ Early. The idea is complete; the code is a seed. A few things are deliberately l
 
 - **How deep "local" goes.** The floor is an exact same-postcode match — no geographic data, works on day one. The richer version is a radius around your postcode centroid (the reference does both). That's the one place real effort lives, and it's optional.
 - **Substrate.** A single self-hosted platform or a federated protocol across many instances — the reach layer works the same on either. The builder's call, not the idea's.
-- **Licence.** Not yet chosen. The trade-off is permissive (MIT/Apache — maximally forkable, but closed forks are allowed) versus copyleft (AGPL — keeps forks open). See the white paper's "Kept Open" section for the intent.
 
 ## The idea is free
 
 It's set down here in public and dated, as prior art, so the core idea can't be quietly patented and fenced off. The reference is open source. Anyone can fork it and stand up their own. Nobody owns this, because there's nothing at the centre to own — that's the point of it, not a gap in it.
 
 *(This describes intent, not legal advice. If formal defensive publication matters to you, take proper counsel.)*
+
+## Licence
+
+The reference code is licensed under the **Apache License 2.0** — see [LICENSE](LICENSE). The white paper and written material are released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**: Apache covers the code, CC BY covers the writing.
 
 ## If you want to build it
 
